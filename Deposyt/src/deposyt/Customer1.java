@@ -23,7 +23,7 @@ public class Customer1 extends Data
 	String TagId = "2088";
 	String AssignId= "817";
 
-	/*public void tests() throws InterruptedException
+	public void tests() throws InterruptedException
 	{
 		// Bulk delete msg
 		Actions actions=new Actions(driver);
@@ -173,7 +173,7 @@ public class Customer1 extends Data
 		driver.findElement(By.cssSelector(".flex.justify-start.gap-1>h1+div>input")).sendKeys("List Is Created");
 		driver.findElement(By.cssSelector(".px-6.py-3.font-semibold.text-sm.bulk_cencel_bt.dp-btn.dp-transparent-btn.dp-cancel-btn+button")).click(); 
 	}
-	 */
+	 
 	@Test(priority=2)
 	public void pipelines() throws InterruptedException
 
