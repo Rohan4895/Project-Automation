@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" allow-return-values="true">
+<parameter name="bname" value="chrome"/>
+<parameter name="url" value="https://app.deposyt.com/index.php?m=account"/><!-- Don't forgot to change title while switching between pre and live'-->
+<parameter name="uname" value="rohan@nadsoftdesign.com"/>
+<parameter name="pass" value="icruMOgk"/>
+
+ <test name="Access Level">
+	 <classes>
+			<class name="AccessLevel.Settings">
+			
+			</class>		
+    </classes>
+ </test> 
+</suite> <!-- Suite -->
+		

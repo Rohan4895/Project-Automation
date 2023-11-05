@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Suite">
+<parameter name="bname" value="chrome"/>
+<parameter name="uname" value="rohan@nadsoftdesign.com"/>
+<parameter name="pass" value="icruMOgk"/>
+
+<!-- For webmail class please update twilio number of your account in recivedsms method-->
+	<test name="Daily test">
+		<classes>
+			<class name="Login.Dailytesting">
+				
+			</class>
+		</classes>
+	</test>
+</suite>			 

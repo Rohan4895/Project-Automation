@@ -1,0 +1,27 @@
+ <class name="Modules.Dashboard">
+ 	<methods>
+     		<include name="retrivedata"/>  -- Retrive data form top line of dashboard
+     		<include name="activity"/>  -- Retrive Calls, SMS, Email data
+     		<include name="appdetails"/> --Retrive Appointments count
+     		<include name="campdetails"/> -- Retrive last camapign details
+     	</methods>
+</class>
+
+<class name="Modules.Messages">
+     	<methods>
+     		<include name="SendSMS"/>
+     		<include name="Sendmail"/>
+     	</methods>
+ </class>
+  <class name="Modules.Customers">
+     	<methods>
+     		<include name=""/>
+     		<include name="Sendmail"/>
+     	</methods>
+ </class>
+ 
+ 
+  <class name="Login.Dailytesting">
+ 		  <methods><include name="message"></include></methods>
+ 		 
+ 		  </class>
