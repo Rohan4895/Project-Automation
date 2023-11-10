@@ -286,18 +286,21 @@ public class veer extends Data
 			Assert.assertTrue(false);
 		}
 	}
-
-	@Test(priority = 5)
-	public void Caseid_007() throws Exception//cancel button not working on campaign response page(add note popup)
+	
+	@Parameters({"uname", "pass"})
+	@Test(priority = 29)
+	public void Caseid_007(String uname, String pass ) throws Exception//cancel button not working on campaign response page(add note popup)
 	{
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)) ;
 		Actions action = new Actions(driver);
-
+		
+		Relogin(uname, pass);
+		Thread.sleep(2000);
 		driver.navigate().to(Campaigns);
 		System.out.println();
 		System.out.println("Caseid_007: cancel button not working on campaign response page(add note popup)");
 
-		driver.findElement(By.name("search")).sendKeys("SMS Camp");// update campaign name here
+		driver.findElement(By.name("search")).sendKeys("Test Camp Pipeline - o48wj");// update campaign name here
 		action.sendKeys(Keys.ENTER).perform();
 
 		String ReplyCount = driver.findElement(By.cssSelector("div.reply-up")).getText();
@@ -341,7 +344,7 @@ public class veer extends Data
 
 		action.moveToElement(driver.findElement(By.cssSelector("div.hidden.sidebar-bg-color"))).perform();
 		Thread.sleep(1000);
-		String msgcount = driver.findElement(By.id("ms-call-noti-count")).getText();
+		String msgcount = driver.findElement(By.cssSelector("#ms-call-noti-count")).getText();
 		String Topcount = driver.findElement(By.cssSelector("#call_notification>div")).getText();
 
 		System.out.println();
@@ -452,7 +455,7 @@ public class veer extends Data
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			//System.out.println(e);
 		}
 
 		Thread.sleep(2000);
@@ -565,7 +568,7 @@ public class veer extends Data
 		two.click();
 		Thread.sleep(3000);
 		String nav = driver.getCurrentUrl();
-		Assert.assertEquals(nav, "https://app.deposyt.com/index.php?m=appointments&d=neweventtype", "Add New aapointment type button not working");
+		Assert.assertEquals(nav, url+"index.php?m=appointments&d=neweventtype", "Add New aapointment type button not working");
 		System.out.println("	User is navigating to the New appointment page");
 	}
 
@@ -771,7 +774,7 @@ public class veer extends Data
 		driver.switchTo().window(pwindo).close();
 		driver.switchTo().window(nwindo);
 		driver.get(url);
-		Assert.assertEquals(driver.getCurrentUrl(),"https://app.deposyt.com/index.php?m=dashboard");
+		Assert.assertEquals(driver.getCurrentUrl(),url);
 		System.out.println("	Case passed: Remember Me");
 
 
@@ -809,6 +812,7 @@ public class veer extends Data
 		Thread.sleep(2000);
 
 		driver.navigate().to(Pipelines);
+		Thread.sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"block0body\"]/div/div[1]/div/div[1]/div[1]")).click();
 		String PipelineName = driver.findElement(By.cssSelector("#pipelineFilterList>label:nth-of-type(3)")).getAttribute("data-text");
 		driver.findElement(By.cssSelector("#pipelineFilterList>label:nth-of-type(3)")).click();
@@ -1055,7 +1059,7 @@ public class veer extends Data
 
 	@Parameters({"uname", "pass"})
 	@Test(priority = 18)
-	public void Caseid_023(String uname, String pass ) throws Exception//Uracrhive user not able to revert (message sent from superadmin acnt)
+	public void Caseid_023(String uname, String pass ) throws Exception//Unacrhive user not able to revert (message sent from superadmin acnt)
 	{
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)) ;
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -1082,8 +1086,7 @@ public class veer extends Data
 		action.moveToElement(Hover).perform();
 		Icon.click();
 		driver.findElement(By.cssSelector("#read_unread_dd[aria-expanded=\"true\"]+div>a:nth-child(2)")).click();//Archive option 
-		driver.findElement(By.cssSelector("div.oldfiltersgap.desktop-767>a#show_old_remaining_filters")).click();
-		driver.findElement(By.cssSelector("div.oldfiltersgap.desktop-767>a:nth-child(4)")).click();
+		driver.findElement(By.cssSelector("#oldfiltersgap_newrow>a:nth-child(4)")).click();
 		WebElement archive = driver.findElement(By.cssSelector("#"+id+"+div"));
 		WebElement Hover1 = driver.findElement(By.id(id));
 		action.moveToElement(Hover1).perform();
@@ -1124,7 +1127,7 @@ public class veer extends Data
 		System.out.println("Caseid_025: done button stuck on calendar agenda page");
 		driver.navigate().to(Calendar);
 
-		try
+		try//For Appointment
 		{
 			driver.findElement(By.cssSelector("div.new-single-appointment-header+div>div:last-of-type+a+a")).click();
 			Thread.sleep(2000);
@@ -1134,7 +1137,7 @@ public class veer extends Data
 		{
 
 		}
-		try
+		try//Existing Reminder
 		{
 			driver.findElement(By.cssSelector("div.new-single-appointment-header+div>div>div:nth-of-type(3)")).click();
 		}
@@ -1252,9 +1255,11 @@ public class veer extends Data
 
 		driver.navigate().to(Messages);
 
+		Thread.sleep(2000);
 		driver.findElement(By.name("filters")).sendKeys("nadsoft.test99@gmail.com");
+		Thread.sleep(1000);
 		action.sendKeys(Keys.ENTER).perform();
-		Thread.sleep(4000);
+		Thread.sleep(2000);
 
 		try 
 		{
@@ -1335,7 +1340,7 @@ public class veer extends Data
 		try 
 		{
 			driver.findElement(By.cssSelector("#selectAll+span")).click();
-			driver.findElement(By.cssSelector("div.adminbuttons>button")).click();
+			driver.findElement(By.cssSelector("div#campaigntbulkbtnsdiv>a:nth-child(5)")).click();
 			driver.findElement(By.xpath("//*[@id=\"formdeleteactionmodaldiv\"]/div/button")).click();
 		}
 		catch(Exception NoSuchElementException)
@@ -1440,7 +1445,7 @@ public class veer extends Data
 
 		//Setting Contact
 		driver.navigate().to(Customers);
-		
+
 		driver.findElement(By.name("search")).sendKeys("4059934665");
 		action.sendKeys(Keys.ENTER).build().perform();
 
@@ -1477,11 +1482,12 @@ public class veer extends Data
 		driver.findElement(By.cssSelector("p.font-medium.text-15.darkColor")).click();
 		driver.findElement(By.cssSelector("div.flex.justify-between.items-center.gap-8.mt-4.w-full>div>button")).click();
 		Thread.sleep(2000);
-		
+
 		driver.navigate().to(Messages);
+		Thread.sleep(2000);
 		driver.findElement(By.name("filters")).sendKeys("Tag Test");
 		action.sendKeys(Keys.ENTER).build().perform();
-		Thread.sleep(4000);
+		Thread.sleep(2000);
 		driver.findElement(By.id("dashboard-conversation-text"))
 		.sendKeys("test message ");
 		Thread.sleep(2000);
@@ -1496,7 +1502,7 @@ public class veer extends Data
 		try 
 		{
 			driver.findElement(By.cssSelector("#selectAll+span")).click();
-			driver.findElement(By.cssSelector("div.adminbuttons>button")).click();
+			driver.findElement(By.cssSelector("div#campaigntbulkbtnsdiv>a:nth-child(5)")).click();
 			driver.findElement(By.xpath("//*[@id=\"formdeleteactionmodaldiv\"]/div/button")).click();
 		}
 		catch(Exception NoSuchElementException)
@@ -1656,7 +1662,7 @@ public class veer extends Data
 
 		//Setting Contact
 		driver.navigate().to(Customers);
-		driver.findElement(By.name("search")).sendKeys("2543205948");
+		driver.findElement(By.name("search")).sendKeys("15088599996");
 		action.sendKeys(Keys.ENTER).build().perform();
 
 		try 
@@ -1673,10 +1679,10 @@ public class veer extends Data
 			driver.findElement(By.cssSelector("#pipelineCustomerstagesFilterList>label")).click();
 
 			driver.navigate().to(Messages);
-
+			Thread.sleep(2000);
 			driver.findElement(By.name("filters")).sendKeys("Pipeline contact");
 			action.sendKeys(Keys.ENTER).build().perform();
-			Thread.sleep(4000);
+			Thread.sleep(2000);
 			driver.findElement(By.id("dashboard-conversation-text"))
 			.sendKeys("test message ");
 			driver.findElement(By.xpath("//*[@id=\"msgbox_messages\"]/div[3]/div[2]")).click();//<---send
@@ -1695,7 +1701,7 @@ public class veer extends Data
 			driver.findElement(By.cssSelector("#pipelineOneOffstagesFilterList>label")).click();
 
 			driver.findElement(By.name("first_name")).sendKeys("Pipeline contact");	
-			driver.findElement(By.id("cellphone")).sendKeys("2543205948");
+			driver.findElement(By.id("cellphone")).sendKeys("15088599996");
 			driver.findElement(By.xpath("//*[@id=\"add_contact_form\"]/form[1]/div[2]/input[1]")).click();
 
 			try 
@@ -1719,7 +1725,7 @@ public class veer extends Data
 		try 
 		{
 			driver.findElement(By.cssSelector("#selectAll+span")).click();
-			driver.findElement(By.cssSelector("div.adminbuttons>button")).click();
+			driver.findElement(By.cssSelector("div#campaigntbulkbtnsdiv>a:nth-child(5)")).click();
 			driver.findElement(By.xpath("//*[@id=\"formdeleteactionmodaldiv\"]/div/button")).click();
 		}
 		catch(Exception NoSuchElementException)
@@ -1744,7 +1750,7 @@ public class veer extends Data
 		}
 
 		jse.executeScript("scroll(0,300)");
-		action.sendKeys("Contact in campaign through Pipeline").build().perform();
+		action.sendKeys("Contact in campaign through Pipeline break").build().perform();
 		//jse.executeScript("window.scroll(top)");
 		action.sendKeys(Keys.PAGE_UP).sendKeys(Keys.PAGE_UP).sendKeys(Keys.PAGE_UP).build().perform();
 		driver.findElement(By.cssSelector("#gb_btn_wizrd+a.desktop-600")).click();//<-- next button
@@ -1802,6 +1808,39 @@ public class veer extends Data
 		System.out.println("	Campaign Status: "+campstat2); //<--campaign status
 	}
 
+	@Test(priority = 22)
+	public void Caseid_051() throws InterruptedException
+	{
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		Actions action = new Actions(driver);
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+
+		action.moveToElement(driver.findElement(By.cssSelector("div.hidden.sidebar-bg-color"))).perform();
+		jse.executeScript("document.querySelector('div#block0body > div > div > div > div > div > ul').scrollTop=200");
+		Thread.sleep(1000);
+		driver.findElement(By.cssSelector("html > body > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > nav > div:nth-of-type(5) > div:nth-of-type(2) > div:nth-of-type(4) > div > a")).click();
+
+		// Adding new Note
+		driver.findElement(By.xpath("//*[@id=\"notes-toggler\"]/div[1]/div[1]/div[1]/div[1]/a")).click();
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\"js-tags-selectorpop-selectized\"]")).sendKeys("a");
+		action.sendKeys(Keys.ENTER).perform();
+		Thread.sleep(1000);
+		driver.findElement(By.id("dashboard_note_text")).sendKeys("\"This is Test Note 1103\"");
+		driver.findElement(By.id("add_a_note_popup_btn")).click();
+		Thread.sleep(1000);
+		System.out.println();
+		String Note = driver.findElement(By.cssSelector("div.flex.items-center.mt-5.gap-2+div>div>div>div>div:nth-child(4)>div")).getText();
+		System.out.println("Note added: "+Note);
+		Assert.assertEquals(Note, "\"This is Test Note 1103\"", "Note not Updated Correctly ");
+
+		//Deleting note
+		Thread.sleep(1000);
+		driver.findElement(By.cssSelector("div.flex.items-center.mt-5.gap-2+div>div>div>div>div>div:nth-child(2)>div.note-option>a")).click();
+		driver.findElement(By.cssSelector("div.flex.items-center.mt-5.gap-2+div>div>div>div>div>div:nth-child(2)>div.note-option>div>a:nth-child(3)")).click();
+		driver.findElement(By.xpath("//*[@id=\"formdeleteactionmodaldiv\"]/div/button")).click();
+	}
+	
 	@Test(priority = 25, dependsOnMethods = "Caseid_028")
 	public void CountInListCamp() throws Exception 
 	{
@@ -1865,7 +1904,7 @@ public class veer extends Data
 		System.out.println("	Test Passed");
 	}
 
-	@Test(priority = 27, dependsOnMethods = "Caseid_030")
+	@Test(priority = 28, dependsOnMethods = "Caseid_030")
 	public void CountInPiplineCamp() throws Exception 
 	{
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -1890,8 +1929,70 @@ public class veer extends Data
 		action.sendKeys(Keys.ENTER).build().perform();
 		Thread.sleep(4000);
 		String shortcode = driver.findElement(By.cssSelector("div.conversation_started_messages_div_content>div:last-of-type>div>div:nth-child(2)>div:first-child")).getText();
-		Assert.assertEquals(shortcode, "Contact in campaign through Pipeline","Pipeline Campaign Message Not Found");
+		
+		String arr1[] = shortcode.split("break",2);
+		String firstWord1 = arr1[0];
+
+		Assert.assertEquals(firstWord1, "Contact in campaign through Pipeline ","Pipeline Campaign Message Not Found");
 		System.out.println("	Test Passed");
+	}
+	
+	@Parameters({"uname","pass"})
+	@Test(priority = 27)
+	public void CampReply(String uname, String pass) throws Exception
+	{
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(10));
+		Actions action = new Actions(driver);
+		
+		Relogin("nadsoft.test99@gmail.com", "Nadsoft@1234");
+
+		driver.navigate().to(Messages);
+		System.out.println();
+		System.out.println("Verifying Campaign Reply ----->");
+
+		Thread.sleep(2000);
+		driver.findElement(By.cssSelector("div.custom-sms-contact>div:nth-of-type(3)>a:first-of-type")).click();
+		driver.findElement(By.name("filters")).sendKeys("Automation test");
+		Thread.sleep(2000);
+		action.sendKeys(Keys.ENTER).perform();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#convoWrapper > div.conversation_started_messages_div_content > div.sms-box:last-of-type>div>div:nth-of-type(2)>div:first-of-type")));
+		String msg = driver.findElement(By.cssSelector("#convoWrapper > div.conversation_started_messages_div_content > div.sms-box:last-of-type>div>div:nth-of-type(2)>div:first-of-type")).getText();
+
+		String arr1[] = msg.split("break",2);
+		String firstWord1 = arr1[0];
+
+		if(firstWord1.equalsIgnoreCase("Contact in campaign through Pipeline "))
+		{
+			System.out.println("	Campaign Message Recived");
+			
+		}
+		else 
+		{
+			Thread.sleep(5000);
+			driver.navigate().refresh();
+			String msg1 = driver.findElement(By.cssSelector("#convoWrapper > div.conversation_started_messages_div_content > div.sms-box:last-of-type>div>div:nth-of-type(2)>div:first-of-type")).getText();
+			String arr2[] = msg1.split("break", 2);
+			String firstWord2 = arr2[0]; 
+			System.out.println("Recived message:"+firstWord2);
+			Assert.assertEquals(firstWord2,"Hi this is test SMS from campaign ", "Campaign Message Not Recived");
+		}
+
+		driver.findElement(By.xpath("//*[@id=\"dashboard-conversation-text\"]"))
+		.sendKeys("Hi this is test message for daily testing");
+		driver.findElement(By.xpath("//*[@id=\"msgbox_messages\"]/div[3]/div[2]")).click();//<---send
+
+		try
+		{
+			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"toast-container\"]/div")));
+			String msg1 = driver.findElement(By.xpath("//*[@id=\"toast-container\"]/div")).getText();
+			System.out.println("	Reply "+msg1);
+		}
+		catch(Exception TimeOutException) 
+		{
+			System.out.println("Message not sent");
+		}
+		Relogin(uname, pass);
 	}
 
 	//@Test(priority = 25)
